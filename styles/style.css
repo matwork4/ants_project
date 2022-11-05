@@ -1,0 +1,82 @@
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+
+.header{
+	background-color: rgba(21, 70, 94, 0.85);
+	overflow: hidden;
+	height: 10vh;
+    margin: 0px;
+    padding: 0px;
+    box-shadow: 3px 3px 15px 2px black;
+
+    font-size: 1.1em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.header button{
+	height: 40px;
+	width: 90px;
+	margin: 20px;
+	border-radius: 5px;
+}
+
+.header button:hover{
+	background-color: lightgrey;
+	cursor: pointer;
+}
+
+.main{
+	height: 90vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#terrain{
+	margin: 40px;
+	height: 800px;
+	width: 1600px;
+	background-color: ghostwhite;
+	border: 1px solid black;
+}
+
+#terrain table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#terrain td{
+	height: 10px;
+	width: 10px;
+	border: 1px solid lightgrey;
+	/*background-color: red;*/
+	margin: 0;
+	padding: 0;
+}
+
+.nest{
+	background-color: blue;
+}
+
+
+.footer{
+	/*background-color: #3170b7;*/
+	background-color: rgba(21, 70, 94, 0.85);
+	height: 10vh;
+}
+.footer p{
+	display: flex;
+	justify-content: center;
+	padding-top: 4vh;
+	color: white;
+	font-size: 1.1em;
+}
