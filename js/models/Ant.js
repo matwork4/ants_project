@@ -19,6 +19,7 @@ class Ant{
 		this.isAlive = true;
 		this.age = 0;
 		this.nbFoodCollected = 0;
+		this.addPheromones = addPheromones;
 
 		let rand = getRandomInt(4);
 		if(rand==0){
@@ -33,7 +34,9 @@ class Ant{
 	}
 
 	die(){
-		this.isAlive = false;
+		if(age>=lifeTime){
+			this.isAlive = false;
+		}
 	}
 
 	collectFood(){

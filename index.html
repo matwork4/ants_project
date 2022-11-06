@@ -9,9 +9,11 @@
 	</head>
 	<body id="bodyIndex">
 		<div class="header">
+			<div class="info">Food collected: <p id="nbFood">0</p></div>
 			<button id="play" onclick="play()">Play</button>
 			<button id="stop" onclick="stop()">Stop</button>
 			<button id="restart" onclick="restart()">Restart</button>
+			<div class="info"> Generation: <p id="nbGeneration">1</p></div>
 		</div>
 		<div class="main">
 			<div id="terrain">
@@ -24,6 +26,7 @@
 	<script type="text/javascript" src="js/models/Ant.js"></script>
 	<script type="text/javascript" src="js/models/Block.js"></script>
 	<script type="text/javascript" src="js/models/Terrain.js"></script>
+	<script type="text/javascript" src="js/controllers/antsController.js"></script>
 	<script type="text/javascript" src="js/dom.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </html>

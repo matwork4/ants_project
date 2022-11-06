@@ -79,6 +79,15 @@ function updateBlockDOM(id){
 
 }
 
+function updateFoodCollectedDOM(){
+	let elemFood = document.getElementById("nbFood");
+	elemFood.innerText = foodCollected;
+}
+
+function updateGenerationDOM(){
+	let elemGen = document.getElementById("nbGeneration");
+	elemGen.innerText = generation;
+}
 
 
 

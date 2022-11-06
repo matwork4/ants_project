@@ -67,8 +67,8 @@ class Terrain{
 			let b = this.searchBlockById(i);
 			if(b.isEmpty){
 
-				b.redPheromones = parseInt(b.redPheromones - (b.redPheromones/10));
-				b.greenPheromones = parseInt(b.greenPheromones - (b.greenPheromones/10));
+				b.redPheromones = parseInt(b.redPheromones - (b.redPheromones/20));
+				b.greenPheromones = parseInt(b.greenPheromones - (b.greenPheromones/20));
 
 				updateBlockDOM(i);
 			}
