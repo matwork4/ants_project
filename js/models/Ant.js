@@ -18,8 +18,18 @@ class Ant{
 		this.isHoldingFood = false;
 		this.isAlive = true;
 		this.age = 0;
-		this.nbFoodTrouve = 0;
-		this.direction = "N";
+		this.nbFoodCollected = 0;
+
+		let rand = getRandomInt(4);
+		if(rand==0){
+			this.direction = "N";
+		}else if(rand==1){
+			this.direction = "S";
+		}else if(rand==2){
+			this.direction = "E";
+		}else{
+			this.direction = "W";
+		}
 	}
 
 	die(){

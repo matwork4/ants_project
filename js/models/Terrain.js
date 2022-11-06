@@ -11,8 +11,12 @@ class Terrain{
 		for(let i=0;i<dimY-1;i++){
 			for(let j=0;j<dimX-1;j++){
 				idBlock++;
-				tab[i][j]= new Block(false,idBlock);
+				tab[i][j]= new Block(idBlock);
 				//console.log("idBlock = "+idBlock);
+				if(j==0 || j==dimX-2 || i==0 || i==dimY-2){
+					tab[i][j].setWall();
+				}
+
 			}
 			//idBlock--;
 		}
@@ -24,6 +28,10 @@ class Terrain{
 
 	initNest(x,y){
 		this.tab[y][x].initNest();
+	}
+
+	setFood(x,y){
+		this.tab[y][x].setFood();
 	}
 
 	/* fonction qui place une quantité de nourriture donnée 
@@ -48,9 +56,20 @@ class Terrain{
 	/* Fonction qui update les couleurs de chaque bloc
 	*/
 	updateAllBlocks(){
+
+		//avant il faut update les phéromones
+		/* Pour enlever 10% a une valeur : 
+		* a = parseInt(a - (a/10))
+		*/
+
 		for(let i=1; i<=this.nbBlocks;i++){
 			//console.log("fonctionne avec i = "+i);
-			if(this.searchBlockById(i).isEmpty){
+			let b = this.searchBlockById(i);
+			if(b.isEmpty){
+
+				b.redPheromones = parseInt(b.redPheromones - (b.redPheromones/10));
+				b.greenPheromones = parseInt(b.greenPheromones - (b.greenPheromones/10));
+
 				updateBlockDOM(i);
 			}
 		}

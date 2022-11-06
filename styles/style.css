@@ -67,6 +67,14 @@
 	background-color: blue;
 }
 
+.wall{
+	background-color: rgb(33,33,33);
+}
+
+.food{
+	background-image: url("../assets/food.jpg");
+	background-size: cover;
+}
 
 .footer{
 	/*background-color: #3170b7;*/

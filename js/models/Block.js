@@ -17,18 +17,14 @@ class Block{
 	* isEmpty : true lorsque ce n'est pas un mur, false sinon
 	*/
 
-	constructor(isWall, idBlock){
+	constructor(idBlock){
 		this.redPheromones = 0;
 		this.greenPheromones = 0;
-		this.isWall = isWall;
+		this.isWall = false;
 		this.isNest = false;
 		this.isFood = false;
-
-		if(isWall){
-			this.isEmpty = false;
-		}else{
-			this.isEmpty = true;
-		}
+		this.isEmpty = true;
+		
 		this.id = idBlock;
 		//idBlock++;
 	}
@@ -45,8 +41,15 @@ class Block{
 			this.isFood = true;
 			this.isEmpty = false;
 		}
-		
 	}
+
+	setWall(){
+		if(this.isEmpty){
+			this.isWall = true;
+			this.isEmpty = false;
+		}
+	}
+
 
 
 }
