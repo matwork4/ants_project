@@ -17,7 +17,7 @@ var generation = 1;
 var T = new Terrain(dimX,dimY);
 T.initNest(nestPosX,nestPosY);
 //T.setFood(20,20);
-T.setFood(40,30);
+T.setFood(30,20);
 
 displayTerrain();
 /*

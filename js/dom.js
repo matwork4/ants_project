@@ -23,6 +23,7 @@ function displayTerrain(){
 				}
 
 				col.setAttribute('id', 'block'+T.tab[i][j].id);
+				col.setAttribute('onclick','addOrRemoveWall('+T.tab[i][j].id+')');
 
 				ligne.appendChild(col);
 			}
@@ -87,6 +88,39 @@ function updateFoodCollectedDOM(){
 function updateGenerationDOM(){
 	let elemGen = document.getElementById("nbGeneration");
 	elemGen.innerText = generation;
+}
+
+function addOrRemoveWallDOM(id,isNewWall){
+	let elemBloc = document.getElementById("block"+id);
+
+	if(isNewWall){
+		elemBloc.setAttribute('class', "wall");
+		elemBloc.removeAttribute('style');
+	}else{
+		elemBloc.setAttribute('class', "empty");
+	}
+}
+
+/* Fonction qui ajoute ou retire un mur sur le terrain
+*  (uniquement si le jeu est en pause)
+*/
+function addOrRemoveWall(id){
+
+  if(!run){
+	let b = T.searchBlockById(id);
+	if(b.isEmpty){
+		b.isEmpty = false;
+		b.isWall = true;
+		addOrRemoveWallDOM(id,true);
+	}else if(b.isWall){
+		b.isEmpty = true;
+		b.isWall = false;
+		addOrRemoveWallDOM(id,false);
+	}else{
+		console.log("Invalid Wall");
+	}
+  }
+
 }
 
 

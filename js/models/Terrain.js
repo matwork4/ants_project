@@ -66,7 +66,7 @@ class Terrain{
 			//console.log("fonctionne avec i = "+i);
 			let b = this.searchBlockById(i);
 			if(b.isEmpty){
-
+				//retire 5% des phéromones d'une case par tour
 				b.redPheromones = parseInt(b.redPheromones - (b.redPheromones/20));
 				b.greenPheromones = parseInt(b.greenPheromones - (b.greenPheromones/20));
 
@@ -74,6 +74,8 @@ class Terrain{
 			}
 		}
 	}
+
+	
 
 
 }

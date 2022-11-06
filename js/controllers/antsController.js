@@ -27,6 +27,7 @@ function putPheromones(ant){
 			maxPheromones = T.tab[ant.y][ant.x].redPheromones;
 		}
 	}
+	//retire 1% des phéromones par tour
 	if(ant.addPheromones>1){
 		ant.addPheromones =  parseInt(ant.addPheromones-(ant.addPheromones/100));
 		//console.log(ant.addPheromones);
