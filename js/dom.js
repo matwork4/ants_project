@@ -65,18 +65,33 @@ function updateBlockDOM(id){
 	let b = T.searchBlockById(id);
 	let redValue = (b.redPheromones / maxPheromones)*255;
 	let greenValue = (b.greenPheromones / maxPheromones)*255;
+	let blueValue = b.bluePheromones;
+	//console.log("blueValue = "+blueValue);
 	//Pour définir l'opacité (et éviter les cases noires)
+	/*
 	let o;
 	if(b.redPheromones > b.greenPheromones){
 		o = b.redPheromones;
 	}else{
 		o = b.greenPheromones;
-	}
-	let opacity = o/maxPheromones
+	}*/
+	let o = Math.max(b.redPheromones, b.greenPheromones, b.bluePheromones);
+	let opacity = o/maxPheromones;
+	//let opacity = 1;
 
 	let elemBlock = document.getElementById("block"+id);
-	elemBlock.style.background = "rgba("+redValue+","+greenValue+", 0,"+opacity+")"
 
+	if(run){
+		elemBlock.style.background = "rgba("+redValue+","+greenValue+", "+blueValue+","+opacity+")";
+	}else{
+	
+	elemBlock.style.background = "rgba("
+	+(255-Math.max(greenValue,blueValue))+","
+	+(255-Math.max(redValue,blueValue))+", "
+	+(255-Math.max(redValue,greenValue))+","
+	+opacity+")";
+
+	}
 
 }
 

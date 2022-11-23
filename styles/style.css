@@ -40,7 +40,7 @@
 }
 
 .main{
-	height: 90vh;
+	min-height: 90vh;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -60,8 +60,8 @@
 }
 
 #terrain td{
-	height: 10px;
-	width: 10px;
+	height: 12px;
+	width: 12px;
 	border: 1px solid lightgrey;
 	/*background-color: red;*/
 	margin: 0;
@@ -69,7 +69,8 @@
 }
 
 .nest{
-	background-color: blue;
+	background-image: url("../assets/nest2.jpg");
+	background-size: cover;
 }
 
 .wall{

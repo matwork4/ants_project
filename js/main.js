@@ -1,8 +1,8 @@
 
-const dimX = 60;
-const dimY = 60;
-const nestPosX = 16;
-const nestPosY = 40;
+const dimX = 80;
+const dimY = 50;
+const nestPosX = 20;
+const nestPosY = 10;
 const nbAnts = 500;
 const proba = 0.05; //Proba d'en faire qu'a sa tête
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
@@ -16,8 +16,9 @@ var generation = 1;
 
 var T = new Terrain(dimX,dimY);
 T.initNest(nestPosX,nestPosY);
-//T.setFood(20,20);
-T.setFood(30,20);
+
+T.setFood(40,20,80);
+T.setFood(30,25,40);
 
 displayTerrain();
 /*
@@ -30,8 +31,8 @@ var ants = generateAnts();
 
 /* afficher le terrain en fonction des couleurs des phéromones (dégradé)
 */
-T.tab[8][2].redPheromones = 0;
-T.tab[8][2].greenPheromones = 100;
+/*T.tab[8][2].redPheromones = 0;
+T.tab[8][2].greenPheromones = 100;*/
 //updateBlockDOM(1);
 T.updateAllBlocks();
 

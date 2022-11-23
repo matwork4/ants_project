@@ -14,12 +14,15 @@ class Block{
 	* qui possède de la nourriture 
 	* (à suivre pour trouver de la nourriture)
 	* 
+	* bluePheromones : l'odeur de la nourriture
+	* 
 	* isEmpty : true lorsque ce n'est pas un mur, false sinon
 	*/
 
 	constructor(idBlock){
 		this.redPheromones = 0;
 		this.greenPheromones = 0;
+		this.bluePheromones = 0;
 		this.isWall = false;
 		this.isNest = false;
 		this.isFood = false;

@@ -26,20 +26,49 @@ class Terrain{
 		this.dimY = dimY;
 	}
 
+	/* place le nid */
 	initNest(x,y){
 		this.tab[y][x].initNest();
 	}
 
-	setFood(x,y){
+	/* pose de la nourriture à l'emplacement x y 
+	 * avec une intensité de tant (odeur max 255)
+	 */
+	setFood(x,y,intensite){
 		this.tab[y][x].setFood();
+		this.updateBluePheromones(x,y,intensite);
 	}
 
-	/* fonction qui place une quantité de nourriture donnée 
-	*  a un endroit aléatoire 
-	*/
+	/* Créer l'odeur de la nourriture par case
+	 * en fonction de la distance de la nourriture la 
+	 * plus proche 
+	 */
+	updateBluePheromones(x,y,intensite){
+		//nb de case de la nourriture
+		let distance = 0;
+		//valeur de l'odeur 
+		let val = 0;
+		let a = 0;
+		let b = 0;
+		for(let i=0;i<this.tab.length;i++){
+			for(let j=0;j<this.tab[i].length;j++){
+				a = Math.abs(x-j);
+				b = Math.abs(y-i);
+				//on calcule la distance de chaque case a la nourriture
+				distance = Math.sqrt(a*a+b*b);
+				//l'odeur perd 1/8 de son intensité par case
+				val = parseInt(intensite/(distance/8));
 
-	/* fonction qui place des murs en ligne
-	*/
+				//On lui assigne l'odeur de la nourriture la plus proche
+				if(val > this.tab[i][j].bluePheromones){
+					this.tab[i][j].bluePheromones = val;
+					//console.log("val = "+val);
+				}
+			}
+		}
+	}
+
+
 
 	searchBlockById(id){
 		for(let i=0;i<this.tab.length;i++){
