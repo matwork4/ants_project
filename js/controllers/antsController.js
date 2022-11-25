@@ -9,7 +9,8 @@
 function generateAnts(){
 	var ants = [];
 	for(let i=0; i<nbAnts; i++){
-		ants[i] = new Ant(nestPosX,nestPosY,proba);
+		//ICI faire évoluer les proba et alpha
+		ants[i] = new Ant(nestPosX,nestPosY,proba,alpha);
 	}
 	return ants;
 }
@@ -137,11 +138,12 @@ function choiceAnt(ant){
 
 	
 	//correspond aux choix tourner à gauche, tout droit, droite
-	let pLeft=proba/3;
-	let pStraight=proba/3;
-	let pRight=proba/3;
+	let pLeft=ant.proba/3;
+	let pStraight=ant.proba/3;
+	let pRight=ant.proba/3;
 	let pheromonesDesTrois=0;
 	let choix = "none";
+	let totalBlue = 0; //addition des phéromones bleu des 3 cases 
 
 	//On test si les cases autour de la fourmis sont libres
 	let emptyN = false,emptyS = false,emptyE = false,emptyW = false;
@@ -175,15 +177,27 @@ function choiceAnt(ant){
 				pRight = 0.1;
 			}else{ 
 			  if(ant.isHoldingFood){
-				pLeft += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }else{
-				pLeft += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }
 			}
+			//Addition des phéromones bleu des 3 cases
+			totalBlue = T.tab[ant.y][ant.x-1].bluePheromones + T.tab[ant.y-1][ant.x].bluePheromones + T.tab[ant.y][ant.x+1].bluePheromones;
+			if(!ant.isHoldingFood && totalBlue>0 && ant.alpha>0){
+				/* ajout de l'odeur des cases avec bluePheromones des cases et 
+			  	 * alpha (importance de l'odeur) de la fourmis
+			  	 */
+			  	pLeft = (pLeft * (1-ant.alpha)) + ((T.tab[ant.y][ant.x-1].bluePheromones / totalBlue)*ant.alpha);
+			  	pStraight = (pStraight * (1-ant.alpha)) + ((T.tab[ant.y-1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	pRight = (pRight * (1-ant.alpha)) + ((T.tab[ant.y][ant.x+1].bluePheromones / totalBlue)*ant.alpha);
+			  	//console.log("pLeft = "+pLeft+"; pStraight = "+pStraight+"; pRight = "+pRight);
+			}
+
 			if(!emptyW){
 				pLeft=0;
 			}
@@ -221,18 +235,25 @@ function choiceAnt(ant){
 			}else{ 
 			  if(ant.isHoldingFood){
 				//console.log("pheromonesDesTrois = "+pheromonesDesTrois);
-				pLeft += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-proba);
-				//console.log(T.tab[ant.y][ant.x+1].redPheromones +" / "+pheromonesDesTrois+" * "+(1-proba)+" = "+pLeft);
-				pStraight += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
-				//console.log(T.tab[ant.y+1][ant.x].redPheromones +" / "+pheromonesDesTrois+" * "+(1-proba)+" = "+pStraight);
-				pRight += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-proba);
-				//console.log(T.tab[ant.y][ant.x-1].redPheromones +" / "+pheromonesDesTrois+" * "+(1-proba)+" = "+pRight);
+				pLeft += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }else{
-				pLeft += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }
 			}
+
+			//Addition des phéromones bleu des 3 cases
+			totalBlue = T.tab[ant.y][ant.x+1].bluePheromones + T.tab[ant.y+1][ant.x].bluePheromones + T.tab[ant.y][ant.x-1].bluePheromones;
+			if(!ant.isHoldingFood && totalBlue>0 && ant.alpha>0){
+			  	pLeft = (pLeft * (1-ant.alpha)) + ((T.tab[ant.y][ant.x+1].bluePheromones / totalBlue)*ant.alpha);
+			  	pStraight = (pStraight * (1-ant.alpha)) + ((T.tab[ant.y+1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	pRight = (pRight * (1-ant.alpha)) + ((T.tab[ant.y][ant.x-1].bluePheromones / totalBlue)*ant.alpha);
+			  	//console.log("pTotal = "+(pLeft+pStraight+pRight));
+			}
+
 			if(!emptyE){
 				pLeft=0;
 			}
@@ -270,15 +291,25 @@ function choiceAnt(ant){
 				pRight = 0.1;
 			}else{ 
 			  if(ant.isHoldingFood){
-				pLeft += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y][ant.x+1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }else{
-				pLeft += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y][ant.x+1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }
 			}
+
+			//Addition des phéromones bleu des 3 cases
+			totalBlue = T.tab[ant.y-1][ant.x].bluePheromones + T.tab[ant.y][ant.x+1].bluePheromones + T.tab[ant.y+1][ant.x].bluePheromones;
+			if(!ant.isHoldingFood && totalBlue>0 && ant.alpha>0){
+			  	pLeft = (pLeft * (1-ant.alpha)) + ((T.tab[ant.y-1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	pStraight = (pStraight * (1-ant.alpha)) + ((T.tab[ant.y][ant.x+1].bluePheromones / totalBlue)*ant.alpha);
+			  	pRight = (pRight * (1-ant.alpha)) + ((T.tab[ant.y+1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	//console.log("pTotal = "+(pLeft+pStraight+pRight));
+			}
+
 			if(!emptyN){
 				pLeft=0;
 			}
@@ -316,15 +347,25 @@ function choiceAnt(ant){
 				pRight = 0.1;
 			}else{ 
 			  if(ant.isHoldingFood){
-				pLeft += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y+1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y][ant.x-1].redPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y-1][ant.x].redPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }else{
-				pLeft += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pStraight += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-proba);
-				pRight += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-proba);
+				pLeft += (T.tab[ant.y+1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pStraight += (T.tab[ant.y][ant.x-1].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
+				pRight += (T.tab[ant.y-1][ant.x].greenPheromones / pheromonesDesTrois)*(1-ant.proba);
 			  }
 			}
+
+			//Addition des phéromones bleu des 3 cases
+			totalBlue = T.tab[ant.y+1][ant.x].bluePheromones + T.tab[ant.y][ant.x-1].bluePheromones + T.tab[ant.y-1][ant.x].bluePheromones;
+			if(!ant.isHoldingFood && totalBlue>0 && ant.alpha>0){
+			  	pLeft = (pLeft * (1-ant.alpha)) + ((T.tab[ant.y+1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	pStraight = (pStraight * (1-ant.alpha)) + ((T.tab[ant.y][ant.x-1].bluePheromones / totalBlue)*ant.alpha);
+			  	pRight = (pRight * (1-ant.alpha)) + ((T.tab[ant.y-1][ant.x].bluePheromones / totalBlue)*ant.alpha);
+			  	//console.log("pTotal = "+(pLeft+pStraight+pRight));
+			}
+
 			if(!emptyS){
 				pLeft=0;
 			}

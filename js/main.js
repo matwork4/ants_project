@@ -3,8 +3,9 @@ const dimX = 80;
 const dimY = 50;
 const nestPosX = 20;
 const nestPosY = 10;
-const nbAnts = 500;
-const proba = 0.05; //Proba d'en faire qu'a sa tête
+const nbAnts = 400;
+var proba = 0.05; //Proba d'en faire qu'a sa tête
+var alpha = 0.20 //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
 const lifeTime = 1000; //durée de vie avant la prochaine génération
 var run = false;
@@ -74,12 +75,13 @@ async function runSimulation(){
 		if(time>=lifeTime){
 			nextGeneration()
 		}
-		await sleep(20);
+		await sleep(30);
 	}
 }
 
 //Passe a la génération suivante
 function nextGeneration(){
+	//ICI update alpha et proba par rapport a la meilleure fourmis (+ de food collected)
 	generation++;
 	time=0;
 	ants = generateAnts();

@@ -11,10 +11,11 @@ class Ant{
 	* direction : North, South, East, West
 	*/
 
-	constructor(x,y,p){
+	constructor(x,y,p,alpha){
 		this.x=x;
 		this.y=y;
-		this.proba=p;
+		this.proba=p; //evolue
+		this.alpha=alpha; //evolue
 		this.isHoldingFood = false;
 		this.isAlive = true;
 		this.age = 0;
