@@ -56,8 +56,8 @@ class Terrain{
 				b = Math.abs(y-i);
 				//on calcule la distance de chaque case a la nourriture
 				distance = Math.sqrt(a*a+b*b);
-				//l'odeur perd 1/8 de son intensité par case
-				val = parseInt(intensite/(distance/8));
+				//l'odeur perd 1/4 de son intensité par case
+				val = parseInt(intensite/(distance/4));
 
 				//On lui assigne l'odeur de la nourriture la plus proche
 				if(val > this.tab[i][j].bluePheromones){

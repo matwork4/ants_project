@@ -5,12 +5,93 @@
 * ses propres phéromones 
 */
 
+/* Selectionne la meilleure fourmis en fonction
+ * de la nourriture rapportée au nid
+ */
+function aptitude(){
+	var a = ants[0];
+	for(let i=0;i<nbAnts;i++){
+		if(ants[i].nbFoodCollected>a.nbFoodCollected){
+			a = ants[i];
+		}
+	}
+	console.log("Meilleure fourmis generation "+(generation-1)
+		+" :\nfoodCollected = "+a.nbFoodCollected+"; alpha = "+a.alpha+"; proba = "+a.proba);
+	return a;
+}
+
+/* Selection 2 fourmis  
+ * Croisement : prendre au pif les param d'une des 2 fourmis 
+ * Mutation : proba de changer un paramètre 
+ * 
+ */
+function evolution(antA, antB){
+	var antC;
+
+	//Croisement 
+	let tirage = getRandomInt(4);
+	if(tirage == 0){
+		antC = new Ant(nestPosX,nestPosY,antA.proba,antA.alpha);
+	}else if(tirage == 1){
+		antC = new Ant(nestPosX,nestPosY,antA.proba,antB.alpha);
+	}else if(tirage == 2){
+		antC = new Ant(nestPosX,nestPosY,antB.proba,antA.alpha);
+	}else if(tirage == 3){
+		antC = new Ant(nestPosX,nestPosY,antB.proba,antB.alpha);
+	}else{
+		console.log("Erreur tirage evolution "+tirage);
+	}
+
+	//Mutation
+	tirage = getRandomInt(4);
+	let tirage2 = getRandomInt(2); //augmente ou diminue
+	if(tirage2 == 0){
+		tirage2 = -1;
+	}
+	let mutation;
+	if(tirage == 0){
+		mutation = antC.proba + ((antC.proba/inverseDegreMutation) * (-1 * tirage2));
+		if(mutation>0 && mutation<1){
+			antC.proba = mutation;
+		}
+	}else if(tirage == 1){
+		mutation = antC.alpha + ((antC.alpha/inverseDegreMutation) * (-1 * tirage2));
+		if(mutation>0 && mutation<1){
+			antC.alpha = mutation;
+		}
+	}else if(tirage == 2){
+		mutation = antC.proba + ((antC.proba/inverseDegreMutation) * (-1 * tirage2));
+		if(mutation>0 && mutation<1){
+			antC.proba = mutation;
+			//console.log("mutation proba = "+mutation);
+		}
+		mutation = antC.alpha + ((antC.alpha/inverseDegreMutation) * (-1 * tirage2));
+		if(mutation>0 && mutation<1){
+			antC.alpha = mutation;
+			//console.log("mutation alpha= "+mutation);
+		}
+	}else if(tirage == 3){
+		//pas de mutation
+	}else{
+		console.log("Erreur tirage mutation "+tirage);
+	}
+
+	return antC;
+}
+
 
 function generateAnts(){
-	var ants = [];
+	//var ants = [];
+	if(generation>1){
+		var antA = aptitude();
+	}
 	for(let i=0; i<nbAnts; i++){
 		//ICI faire évoluer les proba et alpha
-		ants[i] = new Ant(nestPosX,nestPosY,proba,alpha);
+		if(generation == 1){
+			ants[i] = new Ant(nestPosX,nestPosY,proba,alpha);
+		}else{
+			ants[i] = evolution(antA,ants[i]);
+		}
 	}
 	return ants;
 }

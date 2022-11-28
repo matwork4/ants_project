@@ -1,25 +1,26 @@
 
-const dimX = 80;
-const dimY = 50;
+const dimX = 70;
+const dimY = 40;
 const nestPosX = 20;
 const nestPosY = 10;
 const nbAnts = 400;
-var proba = 0.05; //Proba d'en faire qu'a sa tête
-var alpha = 0.20 //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
+var proba = 0.10; //Proba d'en faire qu'a sa tête
+var alpha = 0.50; //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
-const lifeTime = 1000; //durée de vie avant la prochaine génération
+const lifeTime = 500; //durée de vie avant la prochaine génération
 var run = false;
 var time = 0;
 var maxPheromones = 100; //valeur a augmenter lorsqu'un bloc dépasse
 var foodCollected = 0;
 var generation = 1;
+var inverseDegreMutation = 5; //plus c'est faible plus les mutations sont fortes
 
 
 var T = new Terrain(dimX,dimY);
 T.initNest(nestPosX,nestPosY);
 
-T.setFood(40,20,80);
-T.setFood(30,25,40);
+T.setFood(25,20,100);
+T.setFood(10,5,40);
 
 displayTerrain();
 /*
@@ -27,7 +28,8 @@ deleteTerrain();
 displayTerrain();
 */
 
-var ants = generateAnts();
+var ants = [];
+ants = generateAnts();
 
 
 /* afficher le terrain en fonction des couleurs des phéromones (dégradé)
@@ -91,7 +93,9 @@ function nextGeneration(){
 
 //Retire 5% aux max par tour (pour l'affichage des couleurs)
 function updateMaxPheromones(){
-	maxPheromones = parseInt(maxPheromones - (maxPheromones/20));
+	if(maxPheromones>(addPheromones*2)){
+		maxPheromones = parseInt(maxPheromones - (maxPheromones/20));
+	}
 }
 
 
