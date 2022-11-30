@@ -11,7 +11,7 @@ class Ant{
 	* direction : North, South, East, West
 	*/
 
-	constructor(x,y,p,alpha){
+	constructor(x,y,p,alpha,life){
 		this.x=x;
 		this.y=y;
 		this.proba=p; //evolue
@@ -19,6 +19,7 @@ class Ant{
 		this.isHoldingFood = false;
 		this.isAlive = true;
 		this.age = 0;
+		this.lifeTime = life;
 		this.nbFoodCollected = 0;
 		this.addPheromones = addPheromones;
 

@@ -7,7 +7,7 @@ const nbAnts = 400;
 var proba = 0.10; //Proba d'en faire qu'a sa tête
 var alpha = 0.50; //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
-const lifeTime = 500; //durée de vie avant la prochaine génération
+var lifeTime = 200; //durée de vie globale avant la prochaine génération
 var run = false;
 var time = 0;
 var maxPheromones = 100; //valeur a augmenter lorsqu'un bloc dépasse

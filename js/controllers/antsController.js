@@ -16,8 +16,21 @@ function aptitude(){
 		}
 	}
 	console.log("Meilleure fourmis generation "+(generation-1)
-		+" :\nfoodCollected = "+a.nbFoodCollected+"; alpha = "+a.alpha+"; proba = "+a.proba);
+		+" :\nfoodCollected = "+a.nbFoodCollected+"; alpha = "
+		+a.alpha+"; proba = "+a.proba+"; lifeTime = "+a.lifeTime);
 	return a;
+}
+
+/* Fonction qui renvoie un des deux parametres au 
+ * hasard afin de pratiquer le croisement des fourmis
+ */
+function cross(a,b){
+	let r = getRandomInt(2);
+	if(r==0){
+		return a;
+	}else{
+		return b;
+	}
 }
 
 /* Selection 2 fourmis  
@@ -26,49 +39,40 @@ function aptitude(){
  * 
  */
 function evolution(antA, antB){
-	var antC;
 
-	//Croisement 
-	let tirage = getRandomInt(4);
-	if(tirage == 0){
-		antC = new Ant(nestPosX,nestPosY,antA.proba,antA.alpha);
-	}else if(tirage == 1){
-		antC = new Ant(nestPosX,nestPosY,antA.proba,antB.alpha);
-	}else if(tirage == 2){
-		antC = new Ant(nestPosX,nestPosY,antB.proba,antA.alpha);
-	}else if(tirage == 3){
-		antC = new Ant(nestPosX,nestPosY,antB.proba,antB.alpha);
-	}else{
-		console.log("Erreur tirage evolution "+tirage);
-	}
+	//Croisement
+	var antC = new Ant(nestPosX,nestPosY,cross(antA.proba,antB.proba),cross(antA.alpha,antB.alpha),cross(antA.lifeTime,antB.lifeTime));
 
 	//Mutation
 	tirage = getRandomInt(4);
-	let tirage2 = getRandomInt(2); //augmente ou diminue
+	let tirage2 = getRandomInt(2); //si 1 augmente sinon diminue
 	if(tirage2 == 0){
 		tirage2 = -1;
 	}
 	let mutation;
 	if(tirage == 0){
-		mutation = antC.proba + ((antC.proba/inverseDegreMutation) * (-1 * tirage2));
+		//mutation proba
+		mutation = antC.proba + ((antC.proba/inverseDegreMutation) * tirage2);
 		if(mutation>0 && mutation<1){
 			antC.proba = mutation;
 		}
 	}else if(tirage == 1){
-		mutation = antC.alpha + ((antC.alpha/inverseDegreMutation) * (-1 * tirage2));
+		//mutation alpha
+		mutation = antC.alpha + ((antC.alpha/inverseDegreMutation) * tirage2);
 		if(mutation>0 && mutation<1){
 			antC.alpha = mutation;
 		}
 	}else if(tirage == 2){
-		mutation = antC.proba + ((antC.proba/inverseDegreMutation) * (-1 * tirage2));
-		if(mutation>0 && mutation<1){
-			antC.proba = mutation;
-			//console.log("mutation proba = "+mutation);
-		}
-		mutation = antC.alpha + ((antC.alpha/inverseDegreMutation) * (-1 * tirage2));
-		if(mutation>0 && mutation<1){
-			antC.alpha = mutation;
-			//console.log("mutation alpha= "+mutation);
+		//mutation lifeTime
+		mutation = antC.lifeTime + ((antC.lifeTime/(inverseDegreMutation*2)) * tirage2);
+		if(mutation>0){
+			antC.lifeTime = mutation;
+			//console.log("mutation lifeTime = "+mutation);
+			//Update la variable globale du jeu
+			if(mutation>lifeTime){
+				lifeTime = mutation;
+				console.log("New lifeTime = "+lifeTime);
+			}
 		}
 	}else if(tirage == 3){
 		//pas de mutation
@@ -79,7 +83,7 @@ function evolution(antA, antB){
 	return antC;
 }
 
-
+//Créer une nouvelle génération de fourmis 
 function generateAnts(){
 	//var ants = [];
 	if(generation>1){
@@ -88,7 +92,7 @@ function generateAnts(){
 	for(let i=0; i<nbAnts; i++){
 		//ICI faire évoluer les proba et alpha
 		if(generation == 1){
-			ants[i] = new Ant(nestPosX,nestPosY,proba,alpha);
+			ants[i] = new Ant(nestPosX,nestPosY,proba,alpha,lifeTime);
 		}else{
 			ants[i] = evolution(antA,ants[i]);
 		}
@@ -119,16 +123,33 @@ function putPheromones(ant){
 //Déplace toutes les fourmis 
 function moveAllAnts(){
 	for(let i=0;i<ants.length;i++){
+
+	  //seulement si elle est en vie
+	  if(ants[i].isAlive){
+
+	  	//elle pose ses phéromones
 		putPheromones(ants[i]);
 
+		//elle attrape ou non la nourriture
 		if(ants[i].isHoldingFood){
 			ants[i] = returnFood(ants[i]);
 		}else{
 			ants[i] = catchFood(ants[i]);
 		}
 
+		//elle choisit sa direction
 		ants[i] = choiceAnt(ants[i]);
+
+		//puis se déplace
 		moveAnt(ants[i]);
+
+		//elle vieillit, et meurt si dépasse son espérance de vie
+		ants[i].age++;
+		if(ants[i].age>ants[i].lifeTime){
+			ants[i].isAlive = false;
+			console.log("RIP "+i+"; score : "+ants[i].nbFoodCollected);
+		}
+	  }
 		
 	}
 }
