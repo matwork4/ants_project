@@ -139,7 +139,32 @@ function addOrRemoveWall(id){
 }
 
 
+/* Affiche les informations de toute la colonie
+ */
+function displayAntsInfo(){
+	
+	/* Utiliser \t pour les tab et \n pour les retour ligne
+	 */
+	var chaine = "Generation\tScore\tAlpha\tProba\tLifetime"
 
+	
+	for(var i=0; i<oldAnts.length;i++){
+		chaine = chaine+"\n"+oldAnts[i].generation
+		+"\t"+oldAnts[i].nbFoodCollected
+		+"\t"+oldAnts[i].alpha.toFixed(3)
+		+"\t"+oldAnts[i].proba.toFixed(3)
+		+"\t"+oldAnts[i].lifeTime.toFixed(0);
+	}
+
+	/* ICI a la place de faire un prompt, ecrire dans la div data (id=copy)
+	 * de l'html index
+	 * et remplacer les . par des ,
+	 */
+
+	prompt("Copy to clipboard: Ctrl+C, Enter", chaine);
+	
+
+}
 
 
 

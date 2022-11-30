@@ -31,6 +31,11 @@ displayTerrain();
 var ants = [];
 ants = generateAnts();
 
+/* Tableau de fourmis qui servira a enregistrer 
+ * l'historique des fourmis décédées
+ */
+var oldAnts = [];
+
 
 /* afficher le terrain en fonction des couleurs des phéromones (dégradé)
 */
@@ -69,7 +74,7 @@ function restart(){
 
 async function runSimulation(){
 	while(run){
-		console.log("running ...");
+		//console.log("running ...");
 		moveAllAnts();
 		T.updateAllBlocks();
 		updateMaxPheromones();
@@ -77,23 +82,24 @@ async function runSimulation(){
 		if(time>=lifeTime){
 			nextGeneration()
 		}
-		await sleep(30);
+		await sleep(20);
 	}
 }
 
 //Passe a la génération suivante
 function nextGeneration(){
-	//ICI update alpha et proba par rapport a la meilleure fourmis (+ de food collected)
+	saveOldAnts();
 	generation++;
 	time=0;
 	ants = generateAnts();
 	updateGenerationDOM();
+	T.clearPheromones();
 	stop();
 }
 
 //Retire 5% aux max par tour (pour l'affichage des couleurs)
 function updateMaxPheromones(){
-	if(maxPheromones>(addPheromones*2)){
+	if(maxPheromones>(addPheromones*3)){
 		maxPheromones = parseInt(maxPheromones - (maxPheromones/20));
 	}
 }

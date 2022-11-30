@@ -104,6 +104,20 @@ class Terrain{
 		}
 	}
 
+	/* Fonction qui efface les phéromones posés par les 
+	 * fourmis avant la génération suivante. (c'est pas cool de leur part)
+	 */
+	clearPheromones(){
+		for(let i=0;i<this.tab.length;i++){
+			for(let j=0;j<this.tab[i].length;j++){
+				
+				this.tab[i][j].greenPheromones = 0;
+				this.tab[i][j].redPheromones = 0;
+				
+			}
+		}
+	}
+
 	
 
 

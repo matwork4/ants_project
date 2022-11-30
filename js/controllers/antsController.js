@@ -21,6 +21,8 @@ function aptitude(){
 	return a;
 }
 
+
+
 /* Fonction qui renvoie un des deux parametres au 
  * hasard afin de pratiquer le croisement des fourmis
  */
@@ -524,6 +526,19 @@ function tirageAnt(pLeft, pStraight, pRight){
 
 }
 
+
+/* Enregistre les fourmis de la génération actuelle dans
+ * le registre des fouris décédées 
+ */
+function saveOldAnts(){
+
+	var iOld = 0;
+	for(var i = 0;i<nbAnts;i++){
+		iOld = (i+(nbAnts*(generation-1)));
+		oldAnts[iOld] = ants[i];
+		oldAnts[iOld].generation = generation;
+	}
+}
 
 
 
