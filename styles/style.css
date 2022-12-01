@@ -11,15 +11,15 @@
 	background-color: rgba(21, 70, 94, 0.85);
 	overflow: hidden;
 	height: 10vh;
-    margin: 0px;
-    padding: 0px;
-    box-shadow: 3px 3px 15px 2px black;
+  margin: 0px;
+  padding: 0px;
+  box-shadow: 3px 3px 15px 2px black;
 
-    font-size: 1.1em;
+  font-size: 1.1em;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .header .info{
@@ -27,7 +27,7 @@
 	color: white;
 }
 
-.header button{
+.header button, #close{
 	height: 40px;
 	width: 90px;
 	margin: 20px;
@@ -37,6 +37,12 @@
 .header button:hover{
 	background-color: lightgrey;
 	cursor: pointer;
+	transition: 0.2s;
+}
+#close:hover{
+	background-color: #ff8080;
+	cursor: pointer;
+	transition: 0.2s;
 }
 
 .main{
@@ -94,3 +100,34 @@
 	color: white;
 	font-size: 1.1em;
 }
+
+.main #data{
+	/*display: none;*/
+	position: absolute;
+	top: 20vh;
+	left: 20vh;
+	width: 80vh;
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: 3px 3px 15px 2px black;
+}
+
+.main #data #description{
+	margin-left: 20px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+.main #data #copy{
+	max-height: 50vh;
+	margin-left: 20px;
+	margin-right: 20px;
+	border: 1px solid black;
+	overflow-y: scroll;
+}
+
+
+
+
+
+
