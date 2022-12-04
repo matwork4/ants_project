@@ -22,6 +22,7 @@ T.initNest(nestPosX,nestPosY);
 T.setFood(25,20,100);
 T.setFood(10,5,40);
 
+hideData();
 displayTerrain();
 /*
 deleteTerrain();

@@ -149,7 +149,7 @@ function moveAllAnts(){
 		ants[i].age++;
 		if(ants[i].age>ants[i].lifeTime){
 			ants[i].isAlive = false;
-			console.log("RIP "+i+"; score : "+ants[i].nbFoodCollected);
+			//console.log("RIP "+i+"; score : "+ants[i].nbFoodCollected);
 		}
 	  }
 		

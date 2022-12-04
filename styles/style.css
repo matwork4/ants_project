@@ -101,7 +101,7 @@
 	font-size: 1.1em;
 }
 
-.main #data{
+.main #data_hide{
 	/*display: none;*/
 	position: absolute;
 	top: 20vh;
@@ -112,13 +112,13 @@
 	box-shadow: 3px 3px 15px 2px black;
 }
 
-.main #data #description{
+.main #data_hide #description{
 	margin-left: 20px;
 	margin-top: 20px;
 	margin-bottom: 5px;
 }
 
-.main #data #copy{
+.main #data_hide #copy{
 	max-height: 50vh;
 	margin-left: 20px;
 	margin-right: 20px;

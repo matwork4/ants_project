@@ -156,16 +156,30 @@ function displayAntsInfo(){
 		+"\t"+oldAnts[i].lifeTime.toFixed(0);
 	}
 
-	/* ICI a la place de faire un prompt, ecrire dans la div data (id=copy)
-	 * de l'html index
-	 * et remplacer les . par des ,
-	 */
+	//retire les lignes identiques
+	chaine = chaine.split("\n").filter((item, i, allItems) => {
+  	return i === allItems.indexOf(item);
+	}).join("\n");
 
-	prompt("Copy to clipboard: Ctrl+C, Enter", chaine);
-	
+	var elem = document.getElementById("copy");
+	elem.innerText = chaine.replaceAll(".",",");
+
+	//prompt("Copy to clipboard: Ctrl+C, Enter", chaine);
+	afficheData();
 
 }
 
 
+function hideData(){
+	//console.log("hide");
+	var elem = document.getElementById("data_hide");
+	elem.style.display = "none";
+}
+
+function afficheData(){
+	//console.log("affiche");
+	var elem = document.getElementById("data_hide");
+	elem.style.display = "";
+}
 
 
