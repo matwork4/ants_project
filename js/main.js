@@ -19,8 +19,8 @@ var inverseDegreMutation = 5; //plus c'est faible plus les mutations sont fortes
 var T = new Terrain(dimX,dimY);
 T.initNest(nestPosX,nestPosY);
 
-T.setFood(25,20,100);
-T.setFood(10,5,40);
+T.setFood(25,15,100);
+T.setFood(30,5,40);
 
 hideData();
 displayTerrain();
