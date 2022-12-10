@@ -4,6 +4,7 @@ const dimY = 40;
 const nestPosX = 20;
 const nestPosY = 10;
 const nbAnts = 400;
+const sleepDuration = 20;
 var proba = 0.10; //Proba d'en faire qu'a sa tête
 var alpha = 0.50; //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
@@ -19,7 +20,7 @@ var inverseDegreMutation = 5; //plus c'est faible plus les mutations sont fortes
 var T = new Terrain(dimX,dimY);
 T.initNest(nestPosX,nestPosY);
 
-T.setFood(25,15,100);
+T.setFood(10,15,100);
 T.setFood(30,5,40);
 
 hideData();
@@ -83,7 +84,7 @@ async function runSimulation(){
 		if(time>=lifeTime){
 			nextGeneration()
 		}
-		await sleep(20);
+		await sleep(sleepDuration);
 	}
 }
 
