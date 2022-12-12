@@ -94,7 +94,13 @@ function generateAnts(){
 	for(let i=0; i<nbAnts; i++){
 		//ICI faire évoluer les proba et alpha
 		if(generation == 1){
-			ants[i] = new Ant(nestPosX,nestPosY,proba,alpha,lifeTime);
+			//console.log("rand = "+Math.random());
+			if(firstGenRandom){
+				ants[i] = new Ant(nestPosX,nestPosY,Math.random(),Math.random(),lifeTime);
+			}else{
+				ants[i] = new Ant(nestPosX,nestPosY,proba,alpha,lifeTime);
+			}
+			
 		}else{
 			ants[i] = evolution(antA,ants[i]);
 		}

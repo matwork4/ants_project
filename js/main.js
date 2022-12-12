@@ -5,6 +5,7 @@ const nestPosX = 20;
 const nestPosY = 10;
 const nbAnts = 400;
 const sleepDuration = 20;
+const firstGenRandom = false; //Dit si la première gen est random ou fixe
 var proba = 0.10; //Proba d'en faire qu'a sa tête
 var alpha = 0.50; //Importance de l'odeur dans les proba (si 1 = ne suit que l'odeur)
 const addPheromones = 100; //phéromones ajouté par déplacement, décrémenté
